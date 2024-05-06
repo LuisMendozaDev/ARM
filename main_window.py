@@ -4,12 +4,15 @@ from tkinter import Image, Tk, Canvas, Entry, Text, Button, PhotoImage, Toplevel
 import tkinter
 from PIL import Image, ImageTk
 import customtkinter
-from controller.main import Controlador
 from views.root import RootView
 # from functions.util_window
 import utils.util_window as util_window
 from module.RBD.main import TkApp
 from module.LDA import main
+
+from tkinter import filedialog
+import PyPDF2
+import os
 
 def relative_to_assets(path: str) -> Path:
     script_path = Path(__file__).resolve().parent
@@ -75,10 +78,20 @@ class mainWindow:
         self.label_imagen = Label(self.root, image=self.image_3, bg="white")
         self.label_imagen.place(relx=0.58, rely=0.9, anchor="center")
 
-        self.create_button("intructions.png", lambda: self.button_clicked(
-            3), 0.38, 0.9, 156.0, 32.0)
+        self.create_button("intructions.png", lambda: self.abrir_pdf(), 0.38, 0.9, 156.0, 32.0)
 
         self.place_buttons()
+    
+    def abrir_pdf(self):
+        # Ruta del archivo PDF
+        ruta_pdf = "instructions.pdf"
+        
+        # Verificar si el archivo existe
+        if os.path.exists(ruta_pdf):
+            # Abrir el archivo PDF
+            os.startfile(ruta_pdf)
+        else:
+            print("El archivo PDF no se encontró en la ruta especificada.")
 
     def place_buttons(self):
         self.title_image.place(relx=0.48, rely=0.35, anchor="center")
