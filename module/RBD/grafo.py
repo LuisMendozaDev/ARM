@@ -517,10 +517,10 @@ class Grafo:
             #print(self.pos)
         
         
-        self.node_size=7
+        self.node_size=6
         self.plot_instance = EditableGraph(
             self.G, node_size=self.node_size, node_color=node_color, node_shape=self.nodes_shapes,
-            node_labels=True, node_label_fontdict=dict(size=5),
+            node_labels=True, node_label_fontdict=dict(size=6),
             edge_color=edge_color, edge_width=1, arrows=True, ax=self.ax,  node_label_offset=(0.0, 0.12), node_layout=self.pos
         )
         #node_layout=self.node_positions

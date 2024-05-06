@@ -4,7 +4,7 @@ from tkinter import Image, Tk, Canvas, Entry, Text, Button, PhotoImage, Toplevel
 import tkinter
 from PIL import Image, ImageTk
 import customtkinter
-from controller.main import Controlador
+#from controller.main import Controlador
 from views.root import RootView
 # from functions.util_window
 import utils.util_window as util_window
