@@ -33,7 +33,7 @@ class Vista_general(tk.Frame):
         self.entry_paths.grid(row=0, column=1, ipadx=1 , pady=20, sticky=tk.W)
         
         self.entry_paths.insert(0, nodo_encontrado.get_paths_required())
-        
+    
         n= tk_app_instance.mpl_canvas.grafo.plot_instance.precursores_de_nodo(nodo)
         
         self.label_paths = tk.Label(self.paths_info_frame, text=f"Out of {n}")
