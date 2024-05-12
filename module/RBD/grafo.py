@@ -232,7 +232,7 @@ class EditableGraph(netgraph.EditableGraph):
         if ciclos:
             print("El grafo contiene ciclos:", ciclos)
         else:
-            print("El grafo no contiene ciclos")
+            #print("El grafo no contiene ciclos")
             # Encontrar el orden topológico
             orden_topologico = list(nx.topological_sort(Analisis))
             

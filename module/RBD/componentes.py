@@ -61,7 +61,7 @@ class Componentes:
     @staticmethod
     def vaciar_lista_componentes():
         Componentes.lista_Componentes.clear()
-    
+        
     #Guardar el objeto tk_app del main para poder acceder a el
     def guardarAPP(self, tk_app_instance):
         self.tk_app_instance = tk_app_instance
