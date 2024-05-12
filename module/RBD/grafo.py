@@ -9,6 +9,7 @@ from module.RBD.componentes import Componentes
 import pandas as pd
 from tkinter import filedialog
 from module.RBD.nodos import nodos
+from module.RBD.barradeherramientas import barradeherramientas
 
 
 
@@ -47,7 +48,7 @@ class EditableGraph(netgraph.EditableGraph):
     #Añadir nodo
     def _add_node(self, event):
         #Importar barra de herramientas 
-        from barradeherramientas import barradeherramientas
+
         
         #Comprobar que este dentro de la grafica
         if event.inaxes != self.ax:
@@ -517,10 +518,10 @@ class Grafo:
             #print(self.pos)
         
         
-        self.node_size=7
+        self.node_size=6
         self.plot_instance = EditableGraph(
             self.G, node_size=self.node_size, node_color=node_color, node_shape=self.nodes_shapes,
-            node_labels=True, node_label_fontdict=dict(size=5),
+            node_labels=True, node_label_fontdict=dict(size=6),
             edge_color=edge_color, edge_width=1, arrows=True, ax=self.ax,  node_label_offset=(0.0, 0.12), node_layout=self.pos
         )
         #node_layout=self.node_positions

@@ -164,7 +164,6 @@ class vetana_calculos():
         
         # Definir los estados posibles para los grupos
         estados_grupos = [0, 1]
-
         # Generar todas las combinaciones de estados para los grupos de componentes
         combinaciones_estados = list(product(estados_grupos, repeat=len(diccionario_grupos_componentes)))
 
@@ -235,13 +234,18 @@ class vetana_calculos():
             else:
                 comprobacion.append(all(subcomprobaciones))
             
-        #print(comprobacion)
+        #print("Comprobacion",comprobacion)
         
         
         
         diccionario_reliabilitys={}
         disponibilidad_del_sistema=1
         
+        # Crear una nueva lista de diccionarios sin los elementos correspondientes a False
+        nueva_lista_diccionarios = [d for d, b in zip(resultados, comprobacion) if b]
+        #print(nueva_lista_diccionarios)
+        casos = len(nueva_lista_diccionarios)
+            
         for elemento in componentes:
             atributos = Componentes.diccionario_atributos(str(elemento))
             if not atributos:
@@ -252,13 +256,24 @@ class vetana_calculos():
             #obtener el tiempo de uso del componente
             tiempo_uso=float(atributos['tiempo_de_uso'])
             
+            #Casos donde funciona el sistema
+            contador = sum(1 for d in nueva_lista_diccionarios if d.get(str(elemento)) == 1)
+            
+            #print(casos,contador)
+            
+            Componentes.obtener_componente_por_nombre(atributos['nombre']).get_reliability()
             #distribucion exponencial
-            reliability= exp(-(rate*(self.tiempo_estudio+tiempo_uso)))
+            unreliability= 1-exp(-(rate*(self.tiempo_estudio+tiempo_uso)))
+            reliability=Componentes.obtener_componente_por_nombre(atributos['nombre']).get_reliability()-(unreliability)
+            #print(reliability)
+            
+           
+            
             if(reliability<0):
                 reliability=0
             
             #Guardar su confiabilidad en su objeto componentes
-            Componentes.obtener_componente_por_nombre(atributos['nombre']).set_reliability(round(reliability, 4))
+            Componentes.obtener_componente_por_nombre(atributos['nombre']).set_reliability(reliability)
                                             
             #Agregar la confiabilidad a la lista
             diccionario_reliabilitys[atributos['nombre']]=reliability

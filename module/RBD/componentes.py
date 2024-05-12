@@ -9,7 +9,7 @@ class Componentes:
         self.mttr = mttr  # mean time to repair
         self.mtbf = mtbf  # mean time to fail
         self.tiempo_de_uso = tiempo_de_uso
-        self.reliability = 0
+        self.reliability = 1
         self.descripcion=descripcion
         self.reparable=reparable
         Componentes.lista_Componentes.append(self)  
@@ -38,7 +38,7 @@ class Componentes:
                 'MTBF': componente.get_mtbf(),
                 'MTTR': componente.get_mttr(),
                 #'Tiempo de Uso': componente.get_tiempo_de_uso(),
-                'Confiabilidad': componente.get_reliability(),
+                'Confiabilidad': round(componente.get_reliability(), 5),
                 'Disponibilidad': componente.get_disponibilidad()
             }
             datos_componentes.append(datos)
