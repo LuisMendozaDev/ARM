@@ -153,6 +153,7 @@ class TkApp:
         # Conectar la ventana principal con el grafo con los otros objetos que necesiten acceder a el
         barradeherramientas.create_toolbar(barradeherramientas, self.root)
         self.ventana_resultados = vetana_resultados(self.root, Componentes)
+        
         self.mpl_canvas = MplCanvas(self.root, self)
         self.ventana_registro_instance = ventana_registro_componentes(
             self, self.root)

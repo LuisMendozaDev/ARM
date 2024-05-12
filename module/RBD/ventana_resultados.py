@@ -3,9 +3,6 @@ from tkinter import ttk
 import pandas as pd
 
 class vetana_resultados():
-    
-    
-    
     def __init__(self, root, componentes):
         self.root=root
         self.componentes=componentes
