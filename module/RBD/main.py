@@ -236,6 +236,6 @@ class TkApp:
         self.root.destroy()
 
 
-if __name__ == "__main__":
-    app = TkApp()
-    app.run()
+# if __name__ == "__main__":
+#     app = TkApp()
+#     app.run()
