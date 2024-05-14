@@ -37,7 +37,7 @@ class vetana_calculos():
         
 
     def calcular(self):
-        inicio_tiempo = time.time()
+        Componentes.reiniciar_reliabilitys()
         
         #obtener tiempo de estudio
         self.tiempo_estudio = float(self.entry_tiempo.get())
@@ -311,11 +311,7 @@ class vetana_calculos():
         #Hacer los calculos
         print("Confiabilidad general del sistema: ",confiabilidad_total,"%")
         
-        # Registra el tiempo de finalización
-        fin_tiempo = time.time()
 
-        # Calcula la diferencia para obtener el tiempo total de ejecución
-        tiempo_total = fin_tiempo - inicio_tiempo
 
         #print(f"El código tomó {tiempo_total} segundos en ejecutarse.")
         
