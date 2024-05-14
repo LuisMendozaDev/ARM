@@ -13,6 +13,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.interpolate import make_interp_spline
+from module.RBD.ventana_resultados import vetana_resultados 
+from module.RBD.Grafica_resultados import GraficaResultados
 
 class VentanaMisiones:
     def __init__(self, root, main):
@@ -162,7 +164,9 @@ class VentanaMisiones:
             else:
                 print("No se ingresó ningún valor.")
                 break
-
+        
+        Componentes.reiniciar_reliabilitys()
+        
         diccionario_misiones={}
         #imprimir la duracion de las misiones
         for mision in self.misiones:
@@ -227,8 +231,10 @@ class VentanaMisiones:
         misiones_y_duraciones=(combinacion_misiones_aleatorias(numeros_intervalos ,diccionario_misiones))
 
         Confiabilidad_total_misiones=1
+        Disponibilidad_total_misiones=1
         puntos_grafica=[(0,1)]
         tiempo_grafica=0
+        
 
 
         for  lista in misiones_y_duraciones:
@@ -454,10 +460,8 @@ class VentanaMisiones:
 
             #print("Comprobacion",comprobacion)
 
-
-
             diccionario_reliabilitys={}
-            disponibilidad_del_sistema=1
+            
 
             # Crear una nueva lista de diccionarios sin los elementos correspondientes a False
             nueva_lista_diccionarios = [d for d, b in zip(resultados, comprobacion) if b]
@@ -475,10 +479,10 @@ class VentanaMisiones:
                 tiempo_uso=float(atributos['tiempo_de_uso'])
 
                 #Casos donde funciona el sistema
-                contador = sum(1 for d in nueva_lista_diccionarios if d.get(str(elemento)) == 1)
+                #contador = sum(1 for d in nueva_lista_diccionarios if d.get(str(elemento)) == 1)
                 #print(casos,contador)
 
-                Componentes.obtener_componente_por_nombre(atributos['nombre']).get_reliability()
+                #Componentes.obtener_componente_por_nombre(atributos['nombre']).get_reliability()
                 #distribucion exponencial
                 reliability=exp(-(rate*(self.tiempo_estudio+tiempo_uso)))
                 #print(elemento ,reliability)
@@ -491,18 +495,6 @@ class VentanaMisiones:
 
                 #Agregar la confiabilidad a la lista
                 diccionario_reliabilitys[atributos['nombre']]=reliability
-
-                if(Componentes.obtener_componente_por_nombre(atributos['nombre']).get_reparable()):
-                    mttr=float(atributos['mttr'])
-                    mtbf=float(atributos['mtbf'])
-                    disponibilidad=round(((mtbf/(mtbf+mttr))+((mttr/(mtbf+mttr)*exp(-(((1/mtbf)+(1/mttr))*self.tiempo_estudio))))), 4)
-                    Componentes.obtener_componente_por_nombre(atributos['nombre']).set_disponibilidad(disponibilidad)
-                    disponibilidad_del_sistema*=disponibilidad
-                else:
-                    disponibilidad=round(reliability, 4)
-                    Componentes.obtener_componente_por_nombre(atributos['nombre']).set_disponibilidad(disponibilidad)
-                    disponibilidad_del_sistema*=disponibilidad
-
 
 
             #print("Diccionario reliabilitys: ", diccionario_reliabilitys)
@@ -527,10 +519,39 @@ class VentanaMisiones:
 
             confiabilidad_total= round(confiabilidad_total, 4)*100
             print("Confiabilidad general del sistema: ",confiabilidad_total,"%")
-
-            disponibilidad_del_sistema = round(disponibilidad_del_sistema, 4)*100
+                        
+            
             #print("Disponibilidad general del sistema: ", disponibilidad_del_sistema, "%")
-        print(round(Confiabilidad_total_misiones, 4)*100)
+        Confiabilidad_total_misiones=(round(Confiabilidad_total_misiones, 4)*100)
+        
+        for elemento in componentes:
+                atributos = Componentes.diccionario_atributos(str(elemento))
+                if not atributos:
+                    continue
+
+                #Calcular la tasa de fallas
+                rate=1/float(atributos['mtbf'])
+                #obtener el tiempo de uso del componente
+                tiempo_uso=float(atributos['tiempo_de_uso'])
+
+                
+                if(Componentes.obtener_componente_por_nombre(atributos['nombre']).get_reparable()):
+                    mttr=float(atributos['mttr'])
+                    mtbf=float(atributos['mtbf'])
+                    disponibilidad=round(((mtbf/(mtbf+mttr))+((mttr/(mtbf+mttr)*exp(-(((1/mtbf)+(1/mttr))*tiempo_grafica))))), 5)
+                    Componentes.obtener_componente_por_nombre(atributos['nombre']).set_disponibilidad(round(disponibilidad, 5))
+                else:
+                    disponibilidad=Componentes.obtener_componente_por_nombre(atributos['nombre']).get_reliability()
+                    Componentes.obtener_componente_por_nombre(atributos['nombre']).set_disponibilidad(round(disponibilidad, 5))
+        
+        disponibilidad_del_sistema=Componentes.Suma_disponibilidad_componentes()
+        disponibilidad_del_sistema=round(disponibilidad_del_sistema, 4)*100
+        
+        vetana_resultados(self.root, Confiabilidad_total_misiones, tiempo_grafica, disponibilidad_del_sistema)
+        Ventanaparagrafico = tk.Tk()
+        GraficaResultados(Ventanaparagrafico, puntos_grafica)
+        
+        
 
 
     def eliminar_mision(self):
