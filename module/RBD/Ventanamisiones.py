@@ -15,6 +15,8 @@ import numpy as np
 from scipy.interpolate import make_interp_spline
 from module.RBD.ventana_resultados import vetana_resultados 
 from module.RBD.Grafica_resultados import GraficaResultados
+import openpyxl
+import pandas as pd
 
 class VentanaMisiones:
     def __init__(self, root, main):
@@ -547,9 +549,30 @@ class VentanaMisiones:
         disponibilidad_del_sistema=Componentes.Suma_disponibilidad_componentes()
         disponibilidad_del_sistema=round(disponibilidad_del_sistema, 4)*100
         
-        vetana_resultados(self.root, Confiabilidad_total_misiones, tiempo_grafica, disponibilidad_del_sistema)
+        v_resultados=vetana_resultados(self.root, Confiabilidad_total_misiones, tiempo_grafica, disponibilidad_del_sistema)
+        df=v_resultados.get_df()
+        
         Ventanaparagrafico = tk.Tk()
         GraficaResultados(Ventanaparagrafico, puntos_grafica)
+        
+        # Seleccionar el archivo de destino
+        file_path = "module/SRA/Resultado.xlsx"
+
+        # Guardar el DataFrame en un archivo Excel
+        if file_path:
+            # Escribir el DataFrame en la primera hoja
+            with pd.ExcelWriter(file_path, engine='openpyxl', mode='w') as writer:
+                df.to_excel(writer, index=False, sheet_name='DataFrame')
+                # Escribir la gráfica en una hoja adicional
+                workbook = writer.book
+                worksheet = workbook.create_sheet('Gráfica')
+                img_path = 'module/SRA/temp_plot.png'  # Guardar la gráfica temporalmente como imagen
+                img = openpyxl.drawing.image.Image(img_path)
+                worksheet.add_image(img, 'A1')
+                workbook.save(file_path)
+                print("¡Los datos y la gráfica han sido exportados correctamente a Excel!")
+        
+        
         
         
 

@@ -9,6 +9,8 @@ from views.root import RootView
 import utils.util_window as util_window
 from module.RBD.main import TkApp
 from module.LDA import main
+from module.SRA.Main_SRA import main_SRA
+
 
 from tkinter import filedialog
 import PyPDF2
@@ -62,7 +64,7 @@ class mainWindow:
         self.button_2.configure(width=100, height=100)
 
         self.button_3 = customtkinter.CTkButton(
-            master=self.root, text="SRA", font=('Britannic Bold', 30), command=lambda: self.button_clicked(3))
+            master=self.root, text="SRA", font=('Britannic Bold', 30), command=lambda: self.play_SRA())
         self.button_3.configure(width=100, height=100)
 
         self.image_1 = self.create_image("decorator_1.png", 495, 420)
@@ -136,6 +138,9 @@ class mainWindow:
         self.lda.protocol("WM_DELETE_WINDOW", self.on_root_lda_close)
 
         self.lda.run()
+        
+    def play_SRA(self):
+        main_SRA()
 
     def ir_a_pantalla_2(self):
         # Oculta la ventana principal

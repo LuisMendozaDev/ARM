@@ -322,8 +322,15 @@ class vetana_calculos():
         
         #Mostrar resultados
         #self.tk_app_instance.ventana_resultados.show_ventana_resultados(confiabilidad_total, self.tiempo_estudio, disponibilidad_del_sistema)
-        vetana_resultados(self.root, confiabilidad_total, self.tiempo_estudio, disponibilidad_del_sistema)  # Crea una instancia de VentanaMisiones dentro de la nueva ventana
+        df=vetana_resultados(self.root, confiabilidad_total, self.tiempo_estudio, disponibilidad_del_sistema)  # Crea una instancia de VentanaMisiones dentro de la nueva ventana
         
+        # Seleccionar el archivo de destino
+        file_path = "module/SRA/Resultado.xlsx"
+
+        # Guardar el DataFrame en un archivo Excel
+        if file_path:
+            self.df.to_excel(file_path, index=False)
+            print("¡Los datos han sido exportados correctamente a Excel!")
         
     def cerrar_ventana(self):
         self.ventana.destroy()
