@@ -9,9 +9,8 @@ from views.root import RootView
 import utils.util_window as util_window
 from module.RBD.main import TkApp
 from module.LDA import main
+
 from module.SRA.Main_SRA import main_SRA
-
-
 from tkinter import filedialog
 import PyPDF2
 import os
