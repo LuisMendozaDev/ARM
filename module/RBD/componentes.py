@@ -56,7 +56,7 @@ class Componentes:
     @staticmethod
     def reiniciar_reliabilitys():
         for n in Componentes.lista_Componentes:
-            n.set_reliability(1)
+            n.reiniciar_relia(1)
             n.set_disponibilidad(1)
     
     #Eliminar componente
@@ -109,6 +109,9 @@ class Componentes:
     
     def set_reliability(self, reliability):
         self.reliability-=(1-reliability)
+    
+    def reiniciar_relia(self, reliability):
+        self.reliability=reliability
         
     def get_reliability(self):
         return self.reliability
