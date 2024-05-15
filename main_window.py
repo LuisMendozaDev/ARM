@@ -170,6 +170,47 @@ class mainWindow:
     def button_clicked(self, button_number):
         print(f"button_{button_number} clicked")
 
+    def lda_window(self):
+        self.root.withdraw()
+        self.lda = main.MainApp()
+
+        self.lda.protocol("WM_DELETE_WINDOW", self.on_root_lda_close)
+
+        self.lda.run()
+
+    def ir_a_pantalla_2(self):
+        # Oculta la ventana principal
+        self.root.withdraw()
+        # Crea la nueva ventana después de cerrar la ventana principal
+        # self.root_view = RootView(self.root)
+        # app = Controlador(self.root_view)
+        self.app = TkApp()
+
+        # Configura el evento de cierre
+        self.app.root.protocol("WM_DELETE_WINDOW", self.on_root_view_close)
+        self.app.run()
+
+    def on_root_view_close(self):
+        # Este método se llama cuando la nueva ventana (RootView) se cierra
+        # Muestra nuevamente la ventana principal
+        self.root.deiconify()
+
+        # Destruye la segunda ventana (RootView)
+        if self.app:
+            self.app.cerrar_ventana()
+            self.app = None  # Resetea la referencia a la ventana RootView
+
+    def on_root_lda_close(self):
+        # Este método se llama cuando la nueva ventana (RootView) se cierra
+        # Muestra nuevamente la ventana principal
+        self.root.deiconify()
+
+        # Destruye la segunda ventana (RootView)
+        if self.lda:
+            self.lda.cerrar_ventana()
+            self.lda = None  # Resetea la referencia a la ventana RootView
+
+
 if __name__ == "__main__":
     root = Tk()
     app = mainWindow(root)
