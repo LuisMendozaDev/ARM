@@ -4,8 +4,11 @@ from tkinter import ttk, messagebox
 import re
 import json
 
-from module.LDA.statics.method import calcular, fit_distribution
+from module.LDA.statics.method import fit_distribution, best_distribution
 from module.LDA.utils.config import load_configuration
+
+# from statics.method import calcular, fit_distribution
+# from utils.config import load_configuration
 
 
 class SheetPage(tk.Frame):
@@ -35,7 +38,7 @@ class SheetPage(tk.Frame):
         self.is_validate = True
 
         self.config = load_configuration()  # Cargar configuración al iniciar
-
+        self.unit = ''
         self.apply_configuration()
 
         self.previous_cell = None
@@ -121,8 +124,8 @@ class SheetPage(tk.Frame):
         self.sheet.column_width(column=1, width=350)
 
     def apply_configuration(self):
-        units = self.config.get("units", "CICLOS")
-        self.update_column_title(units)
+        self.unit = self.config.get("units", "CICLOS")
+        self.update_column_title(self.unit)
 
     def sort_by_ttf(self):
         data = self.sheet.get_sheet_data()
@@ -138,19 +141,12 @@ class SheetPage(tk.Frame):
     def compute_best_distribution(self):
         self.sort_by_ttf()
         self.validate_data()
-        distribution_names = {
-            "expon": "Exponencial",
-            "lognorm": "Lognormal",
-            "gamma": "Gamma",
-            "weibull_min": "Weibull min",
-            "weibull_max": "Weibull max"
-        }
         if (self.is_validate):
             data = []
             for data_line in self.data_sorted:
                 data.append(float(data_line[0]))
-            best_dist, best_params = fit_distribution(data)
-        return distribution_names.get(best_dist, best_dist)
+            best_dist, best_params = best_distribution(data)
+        return best_dist, best_params
 
     def validate_data(self):
         data = self.sheet.get_sheet_data()

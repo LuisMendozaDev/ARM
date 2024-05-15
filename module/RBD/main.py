@@ -143,7 +143,8 @@ class TkApp:
         # menu2.add_command(label='Imprimir atributos', command=self.imprimir_atributos)
         # menu2.add_command(label='Imprimir Boton', command=self.imprimir_boton)
         menu2.add_command(label='Calcular', command=self.calcular)
-        menu2.add_command(label='Simulacion misiones', command=self.simularmisiones)
+        menu2.add_command(label='Simulacion misiones',
+                          command=self.simularmisiones)
         menu2.add_command(label='Organizar', command=self.organizar)
         menu2.add_command(label='Borrar todo', command=self.borrar_todo)
 
@@ -178,12 +179,11 @@ class TkApp:
     def calcular(self):
         # Abrir ventana de calculos
         self.ventana_calculos_intance.show_ventana_calculos()
-    
+
     def simularmisiones(self):
         ventana_misiones = tk.Toplevel(self.root)  # Crea una nueva ventana
-        app_misiones = VentanaMisiones(ventana_misiones, self)  # Crea una instancia de VentanaMisiones dentro de la nueva ventana
-        
-        
+        # Crea una instancia de VentanaMisiones dentro de la nueva ventana
+        app_misiones = VentanaMisiones(ventana_misiones, self)
 
     def run(self):
         # Iniciar ventana
@@ -240,11 +240,11 @@ class TkApp:
 
     def guardar(self):
         self.mpl_canvas.grafo.plot_instance.guardar_en_archivo()
-    
+
     def cerrar_ventana(self):
         self.root.destroy()
 
 
-if __name__ == "__main__":
-    app = TkApp()
-    app.run()
+# if __name__ == "__main__":
+#     app = TkApp()
+#     app.run()
