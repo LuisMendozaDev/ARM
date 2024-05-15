@@ -99,13 +99,13 @@ class GraphPage(tk.Frame):
         else:
             plot_cdf = weibull_cdf(x, best_params)
 
-        self.ax_log.set_title(f'Probability Reliability') 
+        self.ax_log.set_title(f'Probability Failure vs Time') 
 
         self.ax_log.scatter(x, y)
         self.ax_log.plot(x, plot_cdf)
         # self.ax_log.plot(x,plot_cdf_j, label=f'{best_dist_j} jose')
         # self.ax_log.legend()
-        self.ax_log.set_ylabel('Reliabilty') 
+        self.ax_log.set_ylabel('Failure') 
         self.ax_log.set_xlabel(f'{self.unit}')  # Etiqueta del eje x
         self.ax_log.set_xscale('log')  # Escala logarítmica en el eje x
         self.ax_log.set_ylim(0, 1)  # Limitamos el rango de y
