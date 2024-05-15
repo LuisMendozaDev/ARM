@@ -8,7 +8,7 @@ import customtkinter
 import utils.util_window as util_window
 from module.RBD.main import TkApp
 from module.LDA.main import MainApp
-
+from module.SRA.Main_SRA import main_SRA
 from tkinter import filedialog
 import PyPDF2
 import os
@@ -65,7 +65,7 @@ class mainWindow:
         self.button_2.configure(width=100, height=100)
 
         self.button_3 = customtkinter.CTkButton(
-            master=self.root, text="SRA", font=('Britannic Bold', 30), command=lambda: self.button_clicked(3))
+            master=self.root, text="SRA", font=('Britannic Bold', 30), command=lambda: self.play_SRA())
         self.button_3.configure(width=100, height=100)
 
         self.image_1 = self.create_image("decorator_1.png", 495, 420)
@@ -84,6 +84,9 @@ class mainWindow:
         self.create_button("intructions.png", lambda: self.abrir_pdf(), 0.38, 0.9, 156.0, 32.0)
 
         self.place_buttons()
+    
+    def play_SRA(self):
+        main_SRA()
     
     def lda_window(self):
         self.root.withdraw()
