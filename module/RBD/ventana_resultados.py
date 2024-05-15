@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import pandas as pd
 from module.RBD.componentes import Componentes
+import openpyxl
 
         
 class vetana_resultados():
@@ -68,6 +69,13 @@ class vetana_resultados():
         tabla_componentes.grid(row=0, column=0, sticky='nsew')  # Colocar la tabla en la fila 0, columna 0
         scrollbar_y.grid(row=0, column=1, sticky='ns')  # Colocar scrollbar_y en la fila 0, columna 1 al lado de la tabla
         scrollbar_x.grid(row=1, column=0, sticky='ew')  # Colocar scrollbar_x debajo de la tabla (fila 1, columna 0)
+        
+    def get_df(self):
+        return self.df
+        
+            
+        
+
 
 
         
