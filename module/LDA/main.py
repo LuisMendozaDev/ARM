@@ -97,7 +97,7 @@ class MainApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("LDA")
-        center_window(self, 1200, 800)
+        center_window(self, 1300, 800)
 
         # Frame principal para contener el notebook y el otro frame
         main_frame = ttk.Frame(self)

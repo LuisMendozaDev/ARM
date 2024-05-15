@@ -8,7 +8,7 @@ import customtkinter
 import utils.util_window as util_window
 from module.RBD.main import TkApp
 from module.LDA import main
-from module.SRA.Main_SRA import main_SRA
+
 from tkinter import filedialog
 import PyPDF2
 import os
@@ -84,6 +84,9 @@ class mainWindow:
         self.create_button("intructions.png", lambda: self.abrir_pdf(), 0.38, 0.9, 156.0, 32.0)
 
         self.place_buttons()
+    
+    def play_SRA(self):
+        main_SRA()
     
     def lda_window(self):
         self.root.withdraw()
@@ -170,11 +173,10 @@ class mainWindow:
     def lda_window(self):
         self.root.withdraw()
         self.lda = main.MainApp()
+
         self.lda.protocol("WM_DELETE_WINDOW", self.on_root_lda_close)
+
         self.lda.run()
-        
-    def play_SRA(self):
-        main_SRA()
 
     def ir_a_pantalla_2(self):
         # Oculta la ventana principal

@@ -83,7 +83,7 @@ class ContextualFrame(tk.Frame):
             self.equation_frame, text="Cumulative Distribution Function", bg="#F0F0F0", font=("Verdana", 12, "bold"))
         equiation_label.pack(expand=False)
 
-        self.equation = Figure(figsize=(4, 2), dpi=100)
+        self.equation = Figure(figsize=(5, 2), dpi=100)
         self.ax = self.equation.add_subplot(111)
         self.ax.axis('off')
 
@@ -116,12 +116,18 @@ class ContextualFrame(tk.Frame):
         elif best_dist == "Lognormal":
             data.extend([["s", round(best_parametros[0], 5)], ["loc", round(best_parametros[1], 5)], [
                         "scale", round(best_parametros[2], 5)]])
-            self.dibujar_funcion(r'$R(t) =e^{x}  +2$')
+            self.dibujar_funcion(r'$R(t) = \int_{ln(t)}^{\infty} \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2} \left( \frac{x - \mu}{\sigma} \right)^2} dx$')
         elif best_dist == "Weibull":
             data.extend([["c", round(best_parametros[0], 5)], ["loc", round(best_parametros[1], 5)], [
                         "scale", round(best_parametros[2], 5)]])
             self.dibujar_funcion(
                 r'$R(t) = e^{-\left(\frac{t-\gamma}{\eta}\right)^{\beta}}$')
+        elif best_dist == "Normal":
+            data.extend([["μ (loc)", round(best_parametros[0], 5)], [
+                        "σ (scale)", round(best_parametros[1], 5)]])
+            self.dibujar_funcion(r'$R(t) = \int_{t}^{\infty} \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2} \left( \frac{x - \mu}{\sigma} \right)^2} dx$')
+            
+
 
         # Mostrar los datos en la hoja de cálculo
         self.parameters.set_sheet_data(data)

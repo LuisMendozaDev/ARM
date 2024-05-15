@@ -4,7 +4,7 @@ from tkinter import ttk, messagebox
 import customtkinter as ctk
 
 
-from module.LDA.statics.method import exp_cdf, lognorm_cdf, weibull_cdf
+from module.LDA.statics.method import exp_cdf, lognorm_cdf, weibull_cdf, norm_cdf
 from module.LDA.utils.config import load_configuration
 
 
@@ -128,8 +128,11 @@ class CalculatorPage(tk.Frame):
             dist = exp_cdf(float(self.input.get()), self.best_params)
         elif self.best_dist == "Lognormal":
             dist = lognorm_cdf(float(self.input.get()), self.best_params)
+        elif self.best_dist == "Normal":
+            dist = norm_cdf(float(self.input.get()), self.best_params)
         else:
             dist = weibull_cdf(float(self.input.get()), self.best_params)
+
 
         if (self.mode):
             # reliability
