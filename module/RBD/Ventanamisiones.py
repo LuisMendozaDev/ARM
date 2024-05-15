@@ -17,6 +17,7 @@ from module.RBD.ventana_resultados import vetana_resultados
 from module.RBD.Grafica_resultados import GraficaResultados
 import openpyxl
 import pandas as pd
+from random import uniform as rand
 
 class VentanaMisiones:
     def __init__(self, root, main):
@@ -120,8 +121,8 @@ class VentanaMisiones:
         # Agregar los nodos al Treeview
         lista_knout=self.knouts
 
-        print("nodos",nodos)
-        print("lista kout",lista_knout)
+        #print("nodos",nodos)
+        #print("lista kout",lista_knout)
 
         for nodo, kout in zip(nodos, lista_knout):
             tabla_mision.insert('', 'end', values=(nodo, kout))
@@ -185,19 +186,14 @@ class VentanaMisiones:
 
 
             diccionario_misiones[mision]=duracion
-        print(diccionario_misiones)
+        #print(diccionario_misiones)
 
         def generar_horas_aleatorias(n, total):
-            numeros=[0]
-            while numeros[-1]<=0:
-                numeros = []
-                for i in range(n - 1):
-                    numero=0
-                    while numero<=0:
-                        numero = round(random.uniform(1, total - sum(numeros)-(n-i)), 2)
-                    numeros.append(numero)
-                numeros.append(total - sum(numeros))
-            return numeros
+            splits = [0] + [rand(0, 1) for _ in range(0,n-1)] + [1]
+            splits.sort()
+            diffs = [x - splits[i - 1] for i, x in enumerate(splits)][1:]
+            numeros = map(lambda x:x*total, diffs)
+            return list(numeros)
 
         # Número de intervalos
         def combinacion_misiones_aleatorias(num_intervalos, dic_misiones_y_duracion):
@@ -262,7 +258,7 @@ class VentanaMisiones:
             ######Simular mision#########
 
             #duracion de la mision
-            print("Mision: ", mision," Duracion de la mision: ", duracion_mision)
+            #print("Mision: ", mision," Duracion de la mision: ", duracion_mision)
 
             #obtener tiempo de estudio
             self.tiempo_estudio = duracion_mision
@@ -514,13 +510,13 @@ class VentanaMisiones:
 
             confiabilidad_total = sum(lista_confiabilidades_parciales)
             Confiabilidad_total_misiones-=(1-confiabilidad_total)
-            print("Confiabilidad_total_misiones", Confiabilidad_total_misiones)
+            #print("Confiabilidad_total_misiones", Confiabilidad_total_misiones)
             tiempo_grafica+=self.tiempo_estudio
             puntos_grafica.append((tiempo_grafica ,Confiabilidad_total_misiones))
 
 
             confiabilidad_total= round(confiabilidad_total, 4)*100
-            print("Confiabilidad general del sistema: ",confiabilidad_total,"%")
+            #print("Confiabilidad general del sistema: ",confiabilidad_total,"%")
                         
             
             #print("Disponibilidad general del sistema: ", disponibilidad_del_sistema, "%")
@@ -632,10 +628,3 @@ class VentanaMisiones:
                 widget.item(item_id, values=(widget.item(item_id, 'values')[0], nuevo_valor))
 
         #si el nuevo valor es mayor a numero_precursores_nodo generar error
-
-        def calculos_mision(self):
-            pass
-
-
-
-

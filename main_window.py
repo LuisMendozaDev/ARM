@@ -132,9 +132,7 @@ class mainWindow:
     def lda_window(self):
         self.root.withdraw()
         self.lda = main.MainApp()
-
         self.lda.protocol("WM_DELETE_WINDOW", self.on_root_lda_close)
-
         self.lda.run()
         
     def play_SRA(self):
