@@ -1,17 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
 import pandas as pd
+from module.RBD.componentes import Componentes
 
+        
 class vetana_resultados():
-    def __init__(self, root, componentes):
+    def __init__(self, root, Confiabilidad_general_sistema, tiempo_estudio, disponibilidad_del_sistema):
         self.root=root
-        self.componentes=componentes
         
-        
-    def show_ventana_resultados(self, Confiabilidad_general_sistema, tiempo_estudio, disponibilidad_del_sistema): 
         # Datos en forma de diccionario
-        datos = self.componentes.imprimir_atributos_resultado()
-
+        datos = Componentes.imprimir_atributos_resultado()
         # Convertir el diccionario a un DataFrame de Pandas
         self.df = pd.DataFrame(datos)
 

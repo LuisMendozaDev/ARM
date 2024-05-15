@@ -52,6 +52,13 @@ class Componentes:
                 return {"nombre":n.get_nombre(), "mttr":n.get_mttr(), "mtbf":n.get_mtbf(), "tiempo_de_uso":n.get_tiempo_de_uso(), "reparable": n.get_reparable()}
         return None
     
+    #reiniciar reliability para todos los objetos de la lista
+    @staticmethod
+    def reiniciar_reliabilitys():
+        for n in Componentes.lista_Componentes:
+            n.reiniciar_relia(1)
+            n.set_disponibilidad(1)
+    
     #Eliminar componente
     def eliminar_componente(self, nodo):
         nodo_eliminar=Componentes.obtener_componente_por_nombre(nombre_buscado=self.tk_app_instance.mpl_canvas.grafo.plot_instance.node_label_artists[nodo].get_text())
@@ -61,6 +68,14 @@ class Componentes:
     @staticmethod
     def vaciar_lista_componentes():
         Componentes.lista_Componentes.clear()
+    
+    @staticmethod
+    def Suma_disponibilidad_componentes():
+        disponobilidad=1
+        for n in Componentes.lista_Componentes:
+            disponobilidad-=(1-n.get_disponibilidad())
+        return disponobilidad
+    
         
     #Guardar el objeto tk_app del main para poder acceder a el
     def guardarAPP(self, tk_app_instance):
@@ -93,7 +108,11 @@ class Componentes:
         return self.tiempo_de_uso
     
     def set_reliability(self, reliability):
+        self.reliability-=(1-reliability)
+    
+    def reiniciar_relia(self, reliability):
         self.reliability=reliability
+        
     def get_reliability(self):
         return self.reliability
     

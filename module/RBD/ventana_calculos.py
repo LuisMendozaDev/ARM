@@ -1,5 +1,6 @@
 import tkinter as tk
 from module.RBD.componentes import Componentes
+from module.RBD.ventana_resultados import vetana_resultados 
 from math import exp
 from itertools import product
 from module.RBD.nodos import nodos
@@ -36,7 +37,7 @@ class vetana_calculos():
         
 
     def calcular(self):
-        inicio_tiempo = time.time()
+        Componentes.reiniciar_reliabilitys()
         
         #obtener tiempo de estudio
         self.tiempo_estudio = float(self.entry_tiempo.get())
@@ -310,11 +311,7 @@ class vetana_calculos():
         #Hacer los calculos
         print("Confiabilidad general del sistema: ",confiabilidad_total,"%")
         
-        # Registra el tiempo de finalización
-        fin_tiempo = time.time()
 
-        # Calcula la diferencia para obtener el tiempo total de ejecución
-        tiempo_total = fin_tiempo - inicio_tiempo
 
         #print(f"El código tomó {tiempo_total} segundos en ejecutarse.")
         
@@ -324,7 +321,9 @@ class vetana_calculos():
         disponibilidad_del_sistema = round(disponibilidad_del_sistema, 4)*100
         
         #Mostrar resultados
-        self.tk_app_instance.ventana_resultados.show_ventana_resultados(confiabilidad_total, self.tiempo_estudio, disponibilidad_del_sistema)
+        #self.tk_app_instance.ventana_resultados.show_ventana_resultados(confiabilidad_total, self.tiempo_estudio, disponibilidad_del_sistema)
+        vetana_resultados(self.root, confiabilidad_total, self.tiempo_estudio, disponibilidad_del_sistema)  # Crea una instancia de VentanaMisiones dentro de la nueva ventana
+        
         
     def cerrar_ventana(self):
         self.ventana.destroy()
