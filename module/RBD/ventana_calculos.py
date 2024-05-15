@@ -324,7 +324,6 @@ class vetana_calculos():
         #self.tk_app_instance.ventana_resultados.show_ventana_resultados(confiabilidad_total, self.tiempo_estudio, disponibilidad_del_sistema)
         vetana_resultados(self.root, confiabilidad_total, self.tiempo_estudio, disponibilidad_del_sistema)  # Crea una instancia de VentanaMisiones dentro de la nueva ventana
         
-        
     def cerrar_ventana(self):
         self.ventana.destroy()
         

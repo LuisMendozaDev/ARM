@@ -45,3 +45,6 @@ class GraficaResultados:
         self.ax.set_ylim(0, 1.1)
         self.ax.grid(True)
         self.canvas.draw()
+        
+        img_path = 'module/SRA/temp_plot.png'  # Guardar la gráfica temporalmente como imagen
+        self.fig.savefig(img_path)
