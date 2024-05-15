@@ -143,7 +143,8 @@ class TkApp:
         # menu2.add_command(label='Imprimir atributos', command=self.imprimir_atributos)
         # menu2.add_command(label='Imprimir Boton', command=self.imprimir_boton)
         menu2.add_command(label='Calcular', command=self.calcular)
-        menu2.add_command(label='Simulacion misiones', command=self.simularmisiones)
+        menu2.add_command(label='Simulacion misiones',
+                          command=self.simularmisiones)
         menu2.add_command(label='Organizar', command=self.organizar)
         menu2.add_command(label='Borrar todo', command=self.borrar_todo)
 
@@ -153,7 +154,6 @@ class TkApp:
         # Conectar la ventana principal con el grafo con los otros objetos que necesiten acceder a el
         barradeherramientas.create_toolbar(barradeherramientas, self.root)
         self.ventana_resultados = vetana_resultados(self.root, Componentes)
-        
         self.mpl_canvas = MplCanvas(self.root, self)
         self.ventana_registro_instance = ventana_registro_componentes(
             self, self.root)
@@ -178,12 +178,11 @@ class TkApp:
     def calcular(self):
         # Abrir ventana de calculos
         self.ventana_calculos_intance.show_ventana_calculos()
-    
+
     def simularmisiones(self):
         ventana_misiones = tk.Toplevel(self.root)  # Crea una nueva ventana
-        app_misiones = VentanaMisiones(ventana_misiones, self)  # Crea una instancia de VentanaMisiones dentro de la nueva ventana
-        
-        
+        # Crea una instancia de VentanaMisiones dentro de la nueva ventana
+        app_misiones = VentanaMisiones(ventana_misiones, self)
 
     def run(self):
         # Iniciar ventana
@@ -240,7 +239,7 @@ class TkApp:
 
     def guardar(self):
         self.mpl_canvas.grafo.plot_instance.guardar_en_archivo()
-    
+
     def cerrar_ventana(self):
         self.root.destroy()
 
