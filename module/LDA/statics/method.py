@@ -58,7 +58,7 @@ def binomial(y):
 
 
 import numpy as np
-from scipy.stats import expon, lognorm, weibull_min
+from scipy.stats import expon, lognorm, weibull_min, norm
 import matplotlib.pyplot as plt
 
 # Funciones de distribución acumulativa (CDF) linealizadas
@@ -71,6 +71,9 @@ def lognorm_cdf(data, params):
 
 def weibull_cdf(data, params):
     return weibull_min.cdf(data, params[0], loc=params[1], scale=params[2])
+
+def norm_cdf(data, params):
+    return norm.cdf(data, loc=params[0], scale=params[1])
 
 def best_distribution(data):
     # Función para calcular el estadístico de Kolmogorov-Smirnov
@@ -85,20 +88,24 @@ def best_distribution(data):
     params_exp = expon.fit(data)
     params_lognorm = lognorm.fit(data)
     params_weibull = weibull_min.fit(data)
+    params_norm = norm.fit(data)
 
     # Calcular el estadístico de Kolmogorov-Smirnov para cada distribución
     D_exp = kolmogorov_smirnov_statistic(data, exp_cdf, params_exp)
     D_lognorm = kolmogorov_smirnov_statistic(data, lognorm_cdf, params_lognorm)
     D_weibull = kolmogorov_smirnov_statistic(data, weibull_cdf, params_weibull)
+    D_norm = kolmogorov_smirnov_statistic(data, norm_cdf, params_norm)
 
     # Determinar la distribución con el menor estadístico
-    min_D = min(D_exp, D_lognorm, D_weibull)
+    min_D = min(D_exp, D_lognorm, D_weibull, D_norm)
     if min_D == D_exp:
         return "Exponential", params_exp
     elif min_D == D_lognorm:
         return "Lognormal", params_lognorm
-    else:
+    elif min_D == D_weibull:
         return "Weibull", params_weibull
+    else:
+        return "Normal", params_norm
 
 # # Generar una muestra de datos de ejemplo
 # sample_data = np.array([750, 1456, 2104.5, 2847.3, 3786.456, 4578, 5461.45, 6145.23, 6896.551724, 7130.124777, 7299.270073, 7352.941176, 7581.501137, 7692.307692, 7812.5, 8061.915511, 8695.652174, 9523.809524, 12500, 20000, 20798.66889, 21276.59574, 21739.13043, 22222.22222, 29411.76471, 31466.33103, 33003.30033, 33333.33333, 33692.72237, 35663.33809, 35714.28571])
